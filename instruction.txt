@@ -19,3 +19,4 @@ Pour rebuild en local :
 
 docker-compose down && docker-compose up --build
 
+après avoir fini le travis.yml on peut push
