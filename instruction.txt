@@ -20,3 +20,22 @@ Pour rebuild en local :
 docker-compose down && docker-compose up --build
 
 après avoir fini le travis.yml on peut push
+
+
+créer un rds
+avec postgres
+
+username : postgres
+password
+databasename: fibvalues
+
+sur beanstalk il faut
+ajouter le security group créé à l'instance
+set les variables d'environnements
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - PGUSER=postgres
+      - PGHOST=postgres # name of the postgres service above
+      - PGDATABASE=postgres
+      - PGPASSWORD=postgres_password
+      - PGPORT=5432
