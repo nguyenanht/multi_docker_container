@@ -1,0 +1,53 @@
+version: '3'
+services:
+  postgres:
+    image: 'postgres:latest'
+    environment:
+      - POSTGRES_PASSWORD=postgres_password
+  redis:
+    image: 'redis:latest'
+  api:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./server # We are saying where is the Dockerfile
+    depends_on:
+      - postgres
+    volumes:
+      - /app/node_modules # inside the container, don't try to change file
+      - ./server:/app # try to acces annythin inside the app directory except the node_modules and check for any files in server. It rebuild automatically when we change files
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - PGUSER=postgres
+      - PGHOST=postgres # name of the postgres service above
+      - PGDATABASE=postgres
+      - PGPASSWORD=postgres_password
+      - PGPORT=5432
+  client:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./client
+    volumes:
+      - /app/node_modules
+      -  ./client:/app # we will setup the relationship between all the source code inside the client directory and the app folder inside the container
+    stdin_open: true
+  worker:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./worker
+    volumes:
+      - /app/node_modules
+      - ./worker:/app
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+  nginx:
+    restart: always # nginx must be always on
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./nginx
+    ports:
+      - '3050:80' # on accede nginx avec le port 3050
+    depends_on:
+      - api
+      - client

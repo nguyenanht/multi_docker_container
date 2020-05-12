@@ -1,0 +1,21 @@
+# danns client
+cd client
+# -f spécifie le dockerfile à utiliser
+docker build -f  Dockerfile.dev .
+docker run id_container
+
+dans server
+cd server
+docker build -f  Dockerfile.dev .
+docker run id_container
+
+dans worker
+cd worker
+docker build -f  Dockerfile.dev .
+docker run id_container
+
+
+Pour rebuild en local :
+
+docker-compose down && docker-compose up --build
+
