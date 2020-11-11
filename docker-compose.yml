@@ -47,7 +47,7 @@ services:
       dockerfile: Dockerfile.dev
       context: ./nginx
     ports:
-      - '3050:80' # on accede nginx avec le port 3050
+      - '80:80' # on accede nginx avec le port 3050
     depends_on:
       - api
       - client
