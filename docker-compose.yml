@@ -41,7 +41,7 @@ services:
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
-  nginx:
+  nginxnew:
     image: nginx:1.15-alpine
     restart: always # nginx must be always on    
     ports:
